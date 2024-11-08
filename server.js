@@ -59,8 +59,8 @@ app.listen(port, () => {
 app.post('/insert', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
-        const { question, answer, API_password, url } = req.body;
-        if(API_password != API_PASSWORD) return res.status(401).json({ error: "Invalid API_password" });
+        const { question, answer, password, url } = req.body;
+        if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
 
         if (!question || !answer || answer == "") {
             return res.status(400).json({ error: "Question and answer are required" });
@@ -89,8 +89,8 @@ app.post('/insert', async (req, res) => {
 app.post('/query', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
-        const { question, API_password, url } = req.body;
-        if(API_password != API_PASSWORD) return res.status(401).json({ error: "Invalid API_password" });
+        const { question, password, url } = req.body;
+        if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
         
         const questionDB = database.collection(url);
         const result = await questionDB.findOne({ question });
