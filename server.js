@@ -1,9 +1,12 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const DB_URI = process.env.DB_URI;
-const API_PASSWORD = "E6fPh9"
+const dotenv = require('dotenv');
+dotenv.config();
 
-const client = new MongoClient(DB_URI, {
+const DB_URL = process.env.DB_URL;
+const API_PASSWORD = process.env.API_PASSWORD
+
+const client = new MongoClient(DB_URL, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
