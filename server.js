@@ -1,9 +1,9 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri = "mongodb+srv://rthung:pADyYhVFetxethN8@cluster0.ucaej.mongodb.net/coursera?retryWrites=true&w=majority&appName=Cluster0";
-const PASSWORD = "E6fPh9"
+const DB_URI = process.env.DB_URI;
+const API_PASSWORD = "E6fPh9"
 
-const client = new MongoClient(uri, {
+const client = new MongoClient(DB_URI, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
@@ -39,7 +39,6 @@ const database = client.db('coursera');
 process.on('SIGINT', shutdownDB);
 process.on('SIGTERM', shutdownDB);
 
-// –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 const express = require('express');
 const cors = require('cors');
@@ -57,8 +56,8 @@ app.listen(port, () => {
 app.post('/insert', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
-        const { question, answer, password, url } = req.body;
-        if(password != PASSWORD) return res.status(401).json({ error: "Invalid password" });
+        const { question, answer, API_password, url } = req.body;
+        if(API_password != API_PASSWORD) return res.status(401).json({ error: "Invalid API_password" });
 
         if (!question || !answer || answer == "") {
             return res.status(400).json({ error: "Question and answer are required" });
@@ -87,8 +86,8 @@ app.post('/insert', async (req, res) => {
 app.post('/query', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
-        const { question, password, url } = req.body;
-        if(password != PASSWORD) return res.status(401).json({ error: "Invalid password" });
+        const { question, API_password, url } = req.body;
+        if(API_password != API_PASSWORD) return res.status(401).json({ error: "Invalid API_password" });
         
         const questionDB = database.collection(url);
         const result = await questionDB.findOne({ question });
