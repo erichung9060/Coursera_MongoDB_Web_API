@@ -113,6 +113,6 @@ app.post('/query', async (req, res) => {
     }
 });
 
-app.get('/weak', (req, res) => {
+app.get('/wake', (req, res) => {
     res.send('ok');
 });
