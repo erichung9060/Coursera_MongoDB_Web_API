@@ -61,7 +61,7 @@ app.post('/insert', async (req, res) => {
         const { question, answer, password, url } = req.body;
         if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
 
-        if (!question || !answer || answer == "") {
+        if (question == null || question == "" || answer == null || answer == "" || url == null || url == "") {
             return res.status(400).json({ error: "Question and answer are required" });
         }
 
@@ -91,6 +91,10 @@ app.post('/query', async (req, res) => {
         const { question, password, url } = req.body;
         if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
         
+        if (question == null || question == "" || url == null || url == "") {
+            return res.status(400).json({ error: "Question and answer are required" });
+        }
+
         const questionDB = database.collection(url);
         const result = await questionDB.findOne({ question });
 
