@@ -70,7 +70,6 @@ app.post('/insert', async (req, res) => {
         console.log(answer)
 
         const questionDB = database.collection(url);
-
         const existingQuestion = await questionDB.findOne({ question });
 
         if (existingQuestion) {
