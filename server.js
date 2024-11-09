@@ -59,7 +59,7 @@ app.post('/insert', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
         const { question, answer, password, url } = req.body;
-        if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
+        if (password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
 
         if (question == null || question == "" || answer == null || answer == "" || url == null || url == "") {
             return res.status(400).json({ error: "Question and answer are required" });
@@ -76,7 +76,7 @@ app.post('/insert', async (req, res) => {
         if (existingQuestion) {
             return res.status(200).json({ error: "Question already exists" });
         }
-        
+
         const result = await questionDB.insertOne({ question, answer });
         res.status(200).json({ message: "Data inserted successfully", insertedId: result.insertedId });
     } catch (error) {
@@ -89,8 +89,8 @@ app.post('/query', async (req, res) => {
     try {
         res.set('Access-Control-Allow-Origin', '*');
         const { question, password, url } = req.body;
-        if(password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
-        
+        if (password != API_PASSWORD) return res.status(401).json({ error: "Invalid password" });
+
         if (question == null || question == "" || url == null || url == "") {
             return res.status(400).json({ error: "Question and answer are required" });
         }
@@ -103,8 +103,8 @@ app.post('/query', async (req, res) => {
         console.log(result)
 
         if (!result) {
-            res.json({ question: question});
-        }else{
+            res.json({ question: question });
+        } else {
             res.json({ question: question, answer: result.answer });
         }
 
@@ -112,4 +112,8 @@ app.post('/query', async (req, res) => {
         console.error("Error querying data:", error);
         res.status(500).json({ error: "Failed to query data" });
     }
+});
+
+app.get('/weak', (req, res) => {
+    res.send('ok');
 });
