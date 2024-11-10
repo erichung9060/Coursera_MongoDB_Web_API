@@ -49,7 +49,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const port = 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
