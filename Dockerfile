@@ -5,13 +5,13 @@ FROM node:20
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json if they exist
-COPY package*.json ./
+COPY package.json .
 
 # Install any dependencies
 RUN npm install
 
 # Copy the current directory contents into the container at /usr/src/app
-COPY . .
+COPY index.js .
 
 # Define the environment variable for PORT
 ENV PORT=8080

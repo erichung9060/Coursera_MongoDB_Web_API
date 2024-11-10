@@ -3,7 +3,16 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const DB_URL = process.env.DB_URL;
+if (!DB_URL) {
+    console.error("Error: DB_URL is not set in environment variables.");
+    process.exit(1);
+}
+
 const API_PASSWORD = process.env.API_PASSWORD
+if (!API_PASSWORD) {
+    console.error("Error: API_PASSWORD is not set in environment variables.");
+    process.exit(1);
+}
 
 const client = new MongoClient(DB_URL, {
     serverApi: {
